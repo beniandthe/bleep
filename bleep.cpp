@@ -6,8 +6,8 @@ string sentence;
 string word;
 string word_in_sentence;
 string yes_or_no;
+bool dont_skip_it = true;
 
-bool skip_it = false;
 
 void introduction () {
   cout << "Let's bleep the **** out of some words!\n";
@@ -20,20 +20,19 @@ void introduction () {
   cout << "\nLastly, would you like to turn on visual indexing algorithm? Y/N: \n";
   cin >> yes_or_no;
   
-  while (yes_or_no != "Y" || yes_or_no != "N")
-  {
-    cout << "Please enter Y or N: ";
-    cin >> yes_or_no;
-  
-    if (yes_or_no == "Y")
-    {
-      skip_it = false;
-    } 
 
-    else if (yes_or_no == "N")
+  if (yes_or_no == "Y")
     {
-      skip_it = true;
+      dont_skip_it = true;
+    } 
+  else if (yes_or_no == "N")
+    {
+      dont_skip_it = false;
     }
+  else if (yes_or_no != "Y" || yes_or_no != "N")
+  {
+    cout << "Please enter Y or N: \n";
+    cin >> yes_or_no;
   }
   
   cout << "\nBleeping..." << word;
@@ -50,20 +49,39 @@ void bleep(string &word, string &sentence){
   for (int i = 0; i < sentence.size(); i++) 
   {
     int match_count = 0;
-    
+    if (yes_or_no == "Y")
+    {
     cout << "Sentence Index: " << i << "\n";
-
+    }
+    else
+    {
+      false;
+    }
     //loop through word string
     for (int j = 0; j < word.size(); j++) 
     {
+      if (yes_or_no == "Y")
+      {
       cout << "Word index: " << j << "\n";
- 
+      }
+      else
+      {
+        false;
+      }
       // check if sentence at index plus index j is equal to word at character j
       if (sentence[i + j] == word[j])
       {
-        cout << "Match Found\n";
         match_count += 1;
+        if (yes_or_no == "Y")
+        {         
+        cout << "Match Found\n";
         cout << "Match count: " << match_count << "\n";
+        }
+        else
+        {
+          false;
+        }
+
       }
         
       // if not, break the loop
