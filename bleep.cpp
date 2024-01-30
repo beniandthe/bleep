@@ -4,7 +4,6 @@ using namespace std;
 
 string sentence;
 string word;
-bool match = false;
 string word_in_sentence;
 
 
@@ -41,18 +40,6 @@ void bleep(string &word, string &sentence){
         cout << "Match Found\n";
         match_count += 1;
         cout << "Match count: " << match_count << "\n";
-
-        // check if match count equals the size of the word. if yes, bleep sentence at i + j.
-        if (match_count == word_size)
-        { 
-          match == true;
-          bleeped_sentence[i] = '*';
-        }
-
-        else
-        {
-          match = false;
-        }
       }
         
       // if not, break the loop
@@ -62,7 +49,18 @@ void bleep(string &word, string &sentence){
       }
 
     }
+
+    // if match count = word size
+    // loop through the word index j and set i + j at sentence to *
+    if (match_count == word_size)
+    {
+      for (int j = 0; j < word_size; j++)
+      {
+        bleeped_sentence[i + j] = '*';
+      }
+    }
   }
+
   cout << "\n" << bleeped_sentence;
   return;
 }
