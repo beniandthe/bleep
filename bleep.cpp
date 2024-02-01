@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 using namespace std;
 
 string sentence;
@@ -7,6 +8,10 @@ string word;
 string word_in_sentence;
 string yes_or_no;
 bool dont_skip_it = true;
+
+string bleeped_word = word;
+string bleeped_sentence = sentence;
+int word_size = word.size();
 
 
 void introduction () {
@@ -21,15 +26,15 @@ void introduction () {
   cin >> yes_or_no;
   
 
-  if (yes_or_no == "Y")
+  if (yes_or_no == "Y" || yes_or_no == "y" || yes_or_no == "Yes" || yes_or_no == "yes")
     {
       dont_skip_it = true;
     } 
-  else if (yes_or_no == "N")
+  else if (yes_or_no == "N" || yes_or_no == "n" || yes_or_no == "No" || yes_or_no == "no")
     {
       dont_skip_it = false;
     }
-  else if (yes_or_no != "Y" || yes_or_no != "N")
+  else
   {
     cout << "Please enter Y or N: \n";
     cin >> yes_or_no;
@@ -38,6 +43,33 @@ void introduction () {
   cout << "\nBleeping..." << word;
   cout << "\n~~~~~~~~~~~~~~\n";
 }
+
+
+// function checks if the word to bleep is a smaller word inside another word
+bool word_in_word(){
+
+bool is_in_word = true;
+
+  for (int i = 0; i < sentence.size(); i++)
+  {
+    for (int j = 0; j < word.size(); j++)
+    {
+      if (isspace(bleeped_sentence[i - 1]) && isspace(bleeped_sentence[i + word_size + 1]))
+      {
+        is_in_word = false;
+        return is_in_word;
+      }
+      else
+      {
+        return is_in_word = true;
+      }
+    }
+  }
+  return is_in_word;
+}
+
+
+
 
 void bleep(string &word, string &sentence){
   // pass by reference word and sentence
@@ -91,10 +123,10 @@ void bleep(string &word, string &sentence){
       }
 
     }
-
+    
     // if match count = word size
     // loop through the word index j and set i + j at sentence to *
-    if (match_count == word_size)
+    if (match_count == word_size && !word_in_word())
     {
       for (int j = 0; j < word_size; j++)
       {
@@ -108,9 +140,13 @@ void bleep(string &word, string &sentence){
 }
 
 
+
+
+
+
 int main() {
   
   introduction();
-
+  word_in_word();
   bleep(word, sentence);
 }
